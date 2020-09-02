@@ -20,9 +20,17 @@ namespace SalesBoard.Controllers
         }
 
         // GET: Items
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Items.ToListAsync());
+            var movies = from m in _context.Items
+                         select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                movies = movies.Where(s => s.Name.Contains(searchString));
+            }
+
+            return View(await movies.ToListAsync());
         }
 
         // GET: Items/Details/5
