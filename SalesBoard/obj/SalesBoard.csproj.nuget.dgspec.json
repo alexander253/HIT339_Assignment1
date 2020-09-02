@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\coola\\Desktop\\Ass1HIT339\\SalesBoard\\SalesBoard.csproj": {}
+    "C:\\Users\\coola\\Desktop\\HIT339_Assignment1\\SalesBoard\\SalesBoard.csproj": {}
   },
   "projects": {
-    "C:\\Users\\coola\\Desktop\\Ass1HIT339\\SalesBoard\\SalesBoard.csproj": {
+    "C:\\Users\\coola\\Desktop\\HIT339_Assignment1\\SalesBoard\\SalesBoard.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\coola\\Desktop\\Ass1HIT339\\SalesBoard\\SalesBoard.csproj",
+        "projectUniqueName": "C:\\Users\\coola\\Desktop\\HIT339_Assignment1\\SalesBoard\\SalesBoard.csproj",
         "projectName": "SalesBoard",
-        "projectPath": "C:\\Users\\coola\\Desktop\\Ass1HIT339\\SalesBoard\\SalesBoard.csproj",
+        "projectPath": "C:\\Users\\coola\\Desktop\\HIT339_Assignment1\\SalesBoard\\SalesBoard.csproj",
         "packagesPath": "C:\\Users\\coola\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\coola\\Desktop\\Ass1HIT339\\SalesBoard\\obj\\",
+        "outputPath": "C:\\Users\\coola\\Desktop\\HIT339_Assignment1\\SalesBoard\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -58,9 +58,17 @@
               "target": "Package",
               "version": "[3.1.7, )"
             },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[3.1.7, )"
+            },
             "Microsoft.EntityFrameworkCore.Tools": {
               "target": "Package",
               "version": "[3.1.7, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.4, )"
             }
           },
           "imports": [
