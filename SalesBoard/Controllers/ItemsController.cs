@@ -2,21 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SalesBoard.Data;
 using SalesBoard.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SalesBoard.Controllers
 {
     public class ItemsController : Controller
     {
         private readonly SalesBoardContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public ItemsController(SalesBoardContext context)
+        public ItemsController(SalesBoardContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager; 
         }
 
         // GET: Items
@@ -32,6 +36,16 @@ namespace SalesBoard.Controllers
 
             return View(await movies.ToListAsync());
         }
+
+        // GET: Items/myItems
+        public ActionResult MyItems()
+        {
+            var seller = _userManager.GetUserName(User);
+            var items = _context.Items
+                .Where(m => m.Seller == seller);
+            return View("Index", items);
+        }
+
 
         // GET: Items/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -62,10 +76,12 @@ namespace SalesBoard.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price")] Items items)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,Quantity")] Items items)
         {
             if (ModelState.IsValid)
             {
+                var seller = _userManager.GetUserName(User);
+                items.Seller = seller;
                 _context.Add(items);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

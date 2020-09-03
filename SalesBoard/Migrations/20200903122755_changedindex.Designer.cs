@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SalesBoard.Data;
 
 namespace SalesBoard.Migrations
 {
     [DbContext(typeof(SalesBoardContext))]
-    partial class SalesBoardContextModelSnapshot : ModelSnapshot
+    [Migration("20200903122755_changedindex")]
+    partial class changedindex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,8 +36,8 @@ namespace SalesBoard.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Quanitity")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Seller")
                         .HasColumnType("nvarchar(max)");
