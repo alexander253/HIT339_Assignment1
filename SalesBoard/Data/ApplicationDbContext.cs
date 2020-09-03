@@ -12,5 +12,6 @@ namespace SalesBoard.Data
             : base(options)
         {
         }
+        public DbSet<SalesBoard.Models.Sales> Sales { get; set; }
     }
 }

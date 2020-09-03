@@ -20,7 +20,7 @@ namespace SalesBoard.Controllers
         public ItemsController(SalesBoardContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
-            _userManager = userManager; 
+            _userManager = userManager;
         }
 
         // GET: Items
@@ -173,5 +173,65 @@ namespace SalesBoard.Controllers
         {
             return _context.Items.Any(e => e.Id == id);
         }
+
+        // GET: Items/Purchase/5
+        public async Task<IActionResult> Purchase(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var items = await _context.Items
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (items == null)
+            {
+                return NotFound();
+            }
+
+            return View(items);
+        }
+
+        // POST: Items/Purchase/5
+        [HttpPost, ActionName("Purchase")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> PurchaseConfirmed([Bind("Item,Name,Quantity")] Sales sales)
+        {
+            // get the buyer
+            var buyer = _userManager.GetUserName(User);
+            sales.Buyer = buyer;
+
+            //get the name of item sale
+            var name = "Test";
+            sales.Name = name;
+
+            // make the sale
+            _context.Add(sales);
+
+            // find the item
+            var items = await _context.Items
+                .FirstOrDefaultAsync(m => m.Id == sales.Item);
+
+            if (items == null)
+            {
+                return NotFound();
+            }
+
+            // update the quantity
+            items.Quantity -= sales.Quantity;
+            _context.Update(items);
+
+            // Save the changes
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
+    
+
+
     }
+
+
 }

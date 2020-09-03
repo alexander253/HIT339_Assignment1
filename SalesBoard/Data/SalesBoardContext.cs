@@ -17,5 +17,6 @@ namespace SalesBoard.Data
         }
 
         public DbSet<Items> Items { get; set; }
+        public DbSet<SalesBoard.Models.Sales> Sales { get; set; }
     }
     }

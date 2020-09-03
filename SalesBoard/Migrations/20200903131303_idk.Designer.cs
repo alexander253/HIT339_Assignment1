@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SalesBoard.Data;
 
 namespace SalesBoard.Migrations
 {
     [DbContext(typeof(SalesBoardContext))]
-    partial class SalesBoardContextModelSnapshot : ModelSnapshot
+    [Migration("20200903131303_idk")]
+    partial class idk
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,9 +56,6 @@ namespace SalesBoard.Migrations
 
                     b.Property<string>("Buyer")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Item")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");

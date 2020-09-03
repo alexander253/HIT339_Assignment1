@@ -1,7 +1,8 @@
-﻿@model IEnumerable<SalesBoard.Models.Items>
+﻿@model IEnumerable<SalesBoard.Models.Sales>
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Index</h1>
@@ -9,23 +10,17 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<form asp-controller="Items" asp-action="Index">
-    <p>
-        Title: <input type="text" name="SearchString">
-        <input type="submit" value="Filter" />
-    </p>
-</form>
 <table class="table">
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Item)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
+                @Html.DisplayNameFor(model => model.Buyer)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Quantity)
@@ -37,13 +32,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Item)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                @Html.DisplayFor(modelItem => item.Buyer)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Quantity)
@@ -52,7 +47,6 @@
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                <a asp-action="Purchase" asp-route-id="@item.Id">Purchase</a>
             </td>
         </tr>
 }
