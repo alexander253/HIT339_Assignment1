@@ -202,7 +202,7 @@ namespace SalesBoard.Controllers
             sales.Buyer = buyer;
 
             //get the name of item sale
-            var name = "Test";
+           var name = "Test";
             sales.Name = name;
 
             // make the sale
