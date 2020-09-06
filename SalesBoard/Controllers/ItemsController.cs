@@ -201,9 +201,7 @@ namespace SalesBoard.Controllers
             var buyer = _userManager.GetUserName(User);
             sales.Buyer = buyer;
 
-            //get the name of item sale
-           var name = "Test";
-            sales.Name = name;
+
 
             // make the sale
             _context.Add(sales);
@@ -221,10 +219,16 @@ namespace SalesBoard.Controllers
             items.Quantity -= sales.Quantity;
             _context.Update(items);
 
+            //get the name of item sale
+            var name = items.Name;
+            sales.Name = name;
+
             // Save the changes
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
+
+
         }
 
 

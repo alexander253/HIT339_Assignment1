@@ -329,3 +329,8 @@ C:\Users\coola\Desktop\HIT339_Assignment1\SalesBoard\obj\Debug\netcoreapp3.1\Raz
 C:\Users\coola\Desktop\HIT339_Assignment1\SalesBoard\obj\Debug\netcoreapp3.1\Razor\Views\Sales\Edit.cshtml.g.cs
 C:\Users\coola\Desktop\HIT339_Assignment1\SalesBoard\obj\Debug\netcoreapp3.1\Razor\Views\Sales\Index.cshtml.g.cs
 C:\Users\coola\Desktop\HIT339_Assignment1\SalesBoard\obj\Debug\netcoreapp3.1\Razor\Views\Items\Purchase.cshtml.g.cs
+C:\Users\coola\Desktop\HIT339_Assignment1\SalesBoard\obj\Debug\netcoreapp3.1\Razor\Views\Carts\Create.cshtml.g.cs
+C:\Users\coola\Desktop\HIT339_Assignment1\SalesBoard\obj\Debug\netcoreapp3.1\Razor\Views\Carts\Delete.cshtml.g.cs
+C:\Users\coola\Desktop\HIT339_Assignment1\SalesBoard\obj\Debug\netcoreapp3.1\Razor\Views\Carts\Details.cshtml.g.cs
+C:\Users\coola\Desktop\HIT339_Assignment1\SalesBoard\obj\Debug\netcoreapp3.1\Razor\Views\Carts\Edit.cshtml.g.cs
+C:\Users\coola\Desktop\HIT339_Assignment1\SalesBoard\obj\Debug\netcoreapp3.1\Razor\Views\Carts\Index.cshtml.g.cs
