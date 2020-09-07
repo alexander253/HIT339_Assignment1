@@ -5,9 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
+<h2>Add to Cart</h2>
 
-<h3>Are you sure you want to buy this?</h3>
+<h3>Add item(s) to cart?</h3>
 <div>
     <h4>Items</h4>
     <hr />
@@ -39,7 +39,7 @@
             <span asp-validation-for="Quantity" class="text-danger"></span>
         </div>
         <input type="hidden" asp-for="Id" name="Item"/>
-        <input type="submit" value="Purchase" class="btn btn-default" /> |
+        <input type="submit" value="Add to cart" class="btn btn-default" /> |
         <a asp-action="Index">Back to List</a>
     </form>
 </div>

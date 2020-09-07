@@ -31,8 +31,8 @@ namespace SalesBoard.Controllers
             return View(await _context.Sales.ToListAsync());
         }
 
-        // GET: Sales/mySales actually my purchases
-        public ActionResult MySales()
+        // GET: Sales/myPurchases 
+        public ActionResult MyPurchases()
         {
             var buyer = _userManager.GetUserName(User);
             var sales = _context.Sales.Where(m => m.Buyer == buyer);

@@ -5,15 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Shopping Cart</h1>
 
 
 <!--<p>
     <a asp-action="Create">Create New</a>
 </p> -->
-<p>
-    <a asp-action="Purchase">Purchase All</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -57,3 +55,7 @@
         }
     </tbody>
 </table>
+
+<p>
+    <a asp-action="Purchase" class="btn-success">Purchase All</a>
+</p>

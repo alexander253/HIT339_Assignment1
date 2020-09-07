@@ -189,11 +189,15 @@ namespace SalesBoard.models
 
                 var name = cart.Name;
 
+                var seller = cart.Seller;
+
                 // update the quantity
                 item.Quantity -= cart.Quantity;
                 _context.Update(item);
 
-                Sales sale = new Sales { Buyer = buyer, Name= name, Item = cart.Item, Quantity = cart.Quantity };
+
+
+                Sales sale = new Sales { Buyer = buyer, Seller= seller, Name= name, Item = cart.Item, Quantity = cart.Quantity };
                 _context.Update(sale);
             }
 
