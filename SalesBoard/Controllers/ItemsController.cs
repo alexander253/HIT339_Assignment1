@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using SalesBoard.Data;
 using SalesBoard.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace SalesBoard.Controllers
 {
@@ -16,11 +17,13 @@ namespace SalesBoard.Controllers
     {
         private readonly SalesBoardContext _context;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IHttpContextAccessor _session;
 
-        public ItemsController(SalesBoardContext context, UserManager<IdentityUser> userManager)
+        public ItemsController(SalesBoardContext context, UserManager<IdentityUser> userManager, IHttpContextAccessor session)
         {
             _context = context;
             _userManager = userManager;
+            _session = session;
         }
 
         // GET: Items
@@ -110,7 +113,7 @@ namespace SalesBoard.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price")] Items items)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Quantity,Price")] Items items)
         {
             if (id != items.Id)
             {
@@ -195,41 +198,62 @@ namespace SalesBoard.Controllers
         // POST: Items/Purchase/5
         [HttpPost, ActionName("Purchase")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> PurchaseConfirmed([Bind("Item,Name,Quantity")] Sales sales)
+        public async Task<IActionResult> PurchaseConfirmed([Bind("Item,Name,Seller,Quantity")] Cart cart, Sales sale)
         {
-            // get the buyer
-            var buyer = _userManager.GetUserName(User);
-            sales.Buyer = buyer;
 
+            // get or create a cart id
+            string cartId = _session.HttpContext.Session.GetString("cartId");
 
+            if (string.IsNullOrEmpty(cartId) == true) cartId = Guid.NewGuid().ToString();
 
-            // make the sale
-            _context.Add(sales);
+            // use the cart id
+            cart.CartId = cartId.ToString();
 
-            // find the item
             var items = await _context.Items
-                .FirstOrDefaultAsync(m => m.Id == sales.Item);
+             .FirstOrDefaultAsync(m => m.Id == sale.Item);
 
             if (items == null)
             {
                 return NotFound();
             }
 
-            // update the quantity
-            items.Quantity -= sales.Quantity;
-            _context.Update(items);
-
             //get the name of item sale
             var name = items.Name;
-            sales.Name = name;
+            cart.Name = name;
+
+            //get name of the seller 
+            var seller = items.Seller;
+            cart.Seller = seller;
+
+            // make the sale/save to cart DB
+            _context.Add(cart);
+   
+
+
+            // update the quantity?? only update after purchase all
+            // items.Quantity -= cart.Quantity;
+            //_context.Update(items);
+
 
             // Save the changes
             await _context.SaveChangesAsync();
 
+            // add to cart
+            var checkCount = _session.HttpContext.Session.GetInt32("cartCount");
+            int cartCount = checkCount == null ? 0 : (int)checkCount;
+            _session.HttpContext.Session.SetString("cartId", cartId.ToString());
+            _session.HttpContext.Session.SetInt32("cartCount", ++cartCount);
+
             return RedirectToAction(nameof(Index));
+
+            
+
+            
+         
 
 
         }
+
 
 
     

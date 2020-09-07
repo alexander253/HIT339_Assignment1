@@ -7,22 +7,37 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SalesBoard.Data;
 using SalesBoard.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace SalesBoard.Controllers
 {
     public class SalesController : Controller
     {
         private readonly SalesBoardContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public SalesController(SalesBoardContext context)
+        public SalesController(SalesBoardContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
+
+
         }
 
         // GET: Sales
         public async Task<IActionResult> Index()
         {
+
             return View(await _context.Sales.ToListAsync());
+        }
+
+        // GET: Sales/mySales actually my purchases
+        public ActionResult MySales()
+        {
+            var buyer = _userManager.GetUserName(User);
+            var sales = _context.Sales.Where(m => m.Buyer == buyer);
+
+            return View("Index", sales);
         }
 
         // GET: Sales/Details/5
@@ -54,10 +69,11 @@ namespace SalesBoard.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Item,Name,Buyer,Quantity")] Sales sales)
+        public async Task<IActionResult> Create([Bind("Id,Item,Name,Buyer,Seller,Quantity")] Sales sales, Items items)
         {
             if (ModelState.IsValid)
             {
+
                 _context.Add(sales);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -86,7 +102,7 @@ namespace SalesBoard.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Buyer,Quantity")] Sales sales)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Buyer, Seller, Quantity")] Sales sales)
         {
             if (id != sales.Id)
             {

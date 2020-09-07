@@ -9,6 +9,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
 <form asp-controller="Items" asp-action="Index">
     <p>
         Title: <input type="text" name="SearchString">
@@ -18,6 +19,9 @@
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Seller)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -36,6 +40,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Seller)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>

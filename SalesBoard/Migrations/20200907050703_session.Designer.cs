@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SalesBoard.Data;
 
 namespace SalesBoard.Migrations
 {
     [DbContext(typeof(SalesBoardContext))]
-    partial class SalesBoardContextModelSnapshot : ModelSnapshot
+    [Migration("20200907050703_session")]
+    partial class session
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,9 +38,6 @@ namespace SalesBoard.Migrations
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
-
-                    b.Property<string>("Seller")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -90,9 +89,6 @@ namespace SalesBoard.Migrations
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
-
-                    b.Property<string>("Seller")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

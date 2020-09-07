@@ -37,6 +37,14 @@ namespace SalesBoard
 
             services.AddDbContext<SalesBoardContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("SalesBoardContext")));
+            services.AddSession(options =>
+            {
+                // Set a short timeout for easy testing.
+                options.IdleTimeout = TimeSpan.FromSeconds(600);
+                options.Cookie.HttpOnly = true;
+                // Make the session cookie essential
+                options.Cookie.IsEssential = true;
+            });
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -94,6 +102,7 @@ namespace SalesBoard
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

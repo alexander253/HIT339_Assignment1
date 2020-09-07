@@ -2,26 +2,40 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SalesBoard.Data;
+using SalesBoard.Models;
 
-namespace SalesBoard.Models
+namespace SalesBoard.models
+
 {
     public class CartsController : Controller
     {
         private readonly SalesBoardContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IHttpContextAccessor _session;
 
-        public CartsController(SalesBoardContext context)
+        public CartsController(SalesBoardContext context, UserManager<IdentityUser> userManager, IHttpContextAccessor session)
         {
+            _userManager = userManager;
             _context = context;
+            _session = session;
         }
 
         // GET: Carts
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Cart.ToListAsync());
+            var cartId = _session.HttpContext.Session.GetString("cartId");
+
+            var carts = _context.Cart
+                .Where(c => c.CartId == cartId);
+
+            return View(await carts.ToListAsync());
         }
 
         // GET: Carts/Details/5
@@ -49,11 +63,11 @@ namespace SalesBoard.Models
         }
 
         // POST: Carts/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CartId,Name,Item,Quantity")] Cart cart)
+        public async Task<IActionResult> Create([Bind("Id,Item,Quantity")] Cart cart)
         {
             if (ModelState.IsValid)
             {
@@ -81,11 +95,11 @@ namespace SalesBoard.Models
         }
 
         // POST: Carts/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CartId,Name,Item,Quantity")] Cart cart)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Item,Quantity")] Cart cart)
         {
             if (id != cart.Id)
             {
@@ -141,7 +155,56 @@ namespace SalesBoard.Models
             var cart = await _context.Cart.FindAsync(id);
             _context.Cart.Remove(cart);
             await _context.SaveChangesAsync();
+
+            // add to cart
+            var checkCount = _session.HttpContext.Session.GetInt32("cartCount");
+            int cartCount = checkCount == null ? 0 : (int)checkCount;
+            _session.HttpContext.Session.SetInt32("cartCount", --cartCount);
+
             return RedirectToAction(nameof(Index));
+        }
+
+        // GET: Items/Purchase
+        [Authorize]
+        public async Task<IActionResult> Purchase()
+        {
+            // get the cart id
+            var cartId = _session.HttpContext.Session.GetString("cartId");
+
+            // get the cart items
+            var carts = _context.Cart
+                .Where(c => c.CartId == cartId);
+
+
+
+            // get the buyer
+            var buyer = _userManager.GetUserName(User);
+
+            // create the sales
+            foreach (Cart cart in carts.ToList())
+            {
+                // find the item
+                var item = await _context.Items
+                    .FirstOrDefaultAsync(m => m.Id == cart.Item);
+
+                var name = cart.Name;
+
+                // update the quantity
+                item.Quantity -= cart.Quantity;
+                _context.Update(item);
+
+                Sales sale = new Sales { Buyer = buyer, Name= name, Item = cart.Item, Quantity = cart.Quantity };
+                _context.Update(sale);
+            }
+
+            // Save the changes
+            await _context.SaveChangesAsync();
+
+            // delete cart
+            _session.HttpContext.Session.SetString("cartId","");
+            _session.HttpContext.Session.SetInt32("cartCount", 0);
+
+            return RedirectToAction(nameof(Index),"Items");
         }
 
         private bool CartExists(int id)
