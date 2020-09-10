@@ -191,13 +191,16 @@ namespace SalesBoard.models
 
                 var seller = cart.Seller;
 
+                var totalSpent = cart.Quantity * item.Price;
+
+
                 // update the quantity
                 item.Quantity -= cart.Quantity;
                 _context.Update(item);
 
 
 
-                Sales sale = new Sales { Buyer = buyer, Seller= seller, Name= name, Item = cart.Item, Quantity = cart.Quantity };
+                Sales sale = new Sales { Buyer = buyer, Seller= seller, Name= name, Item = cart.Item, TotalSpent= totalSpent, Quantity = cart.Quantity };
                 _context.Update(sale);
             }
 

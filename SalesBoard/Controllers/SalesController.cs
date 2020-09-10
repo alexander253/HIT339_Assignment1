@@ -40,6 +40,18 @@ namespace SalesBoard.Controllers
             return View("Index", sales);
         }
 
+        // GET: Sales/mySales
+        public ActionResult MySales()
+        {
+            var seller = _userManager.GetUserName(User);
+            var sales = _context.Sales.Where(m => m.Seller == seller);
+
+
+            return View("Index", sales);
+        }
+
+
+
         // GET: Sales/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -135,13 +147,21 @@ namespace SalesBoard.Controllers
         // GET: Sales/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            var sales = await _context.Sales
+                .FirstOrDefaultAsync(m => m.Id == id);
+            var user = _userManager.GetUserName(User);
+
+            if (user !=sales.Seller)
+            {
+                ViewBag.errorMessage = "You are not seller of this item, therefore you can not delete this record";
+                return View("Views/Home/Error.cshtml", ViewBag.errorMessage);
+            }
             if (id == null)
             {
                 return NotFound();
             }
 
-            var sales = await _context.Sales
-                .FirstOrDefaultAsync(m => m.Id == id);
+
             if (sales == null)
             {
                 return NotFound();

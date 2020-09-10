@@ -4,5 +4,36 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+    <ul class="navbar-nav flex-grow-1">
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Items" asp-action=""><h3>Items</h3>
+            <p>Show all the items which are for sale by all users</p></a>
+        </li>
+        
+
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Sales" asp-action="Index"><h3>All Sales</h3>
+            <p>Shows the sales history of all users</p></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Items" asp-action="MyItems"><h3>My Items For Sale</h3>
+            <p>Shows the items the current user has for sale</p></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Sales" asp-action="MyPurchases"><h3>My Purchases</h3>
+            <p>Shows your purchase history</p></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Sales" asp-action="MySales"><h3>My Sales</h3>
+             <p>Shows the current your sales history</p></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Carts" asp-action="Index"><h3>Cart</h3>
+            <p>Shows the items you have added to your cart</p></a>
+        </li>
+    </ul>
+
+
+

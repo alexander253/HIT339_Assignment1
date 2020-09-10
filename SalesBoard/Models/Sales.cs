@@ -13,5 +13,6 @@ namespace SalesBoard.Models
         public string Buyer { get; set; }
         public string Seller { get; set; }
         public int Quantity { get; set; }
+        public decimal TotalSpent { get; set; }
     }
 }
