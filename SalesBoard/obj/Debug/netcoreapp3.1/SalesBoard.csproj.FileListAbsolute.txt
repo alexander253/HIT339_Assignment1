@@ -183,7 +183,6 @@ C:\Users\coola\Desktop\HIT339_Assignment1\SalesBoard\obj\Debug\netcoreapp3.1\sta
 C:\Users\coola\Desktop\HIT339_Assignment1\SalesBoard\obj\Debug\netcoreapp3.1\SalesBoard.dll
 C:\Users\coola\Desktop\HIT339_Assignment1\SalesBoard\obj\Debug\netcoreapp3.1\SalesBoard.pdb
 C:\Users\coola\Desktop\HIT339_Assignment1\SalesBoard\obj\Debug\netcoreapp3.1\SalesBoard.genruntimeconfig.cache
-C:\Users\coola\Desktop\HIT339_Assignment1\SalesBoard\obj\Debug\netcoreapp3.1\Razor\Views\HelloWorld\Index.cshtml.g.cs
 C:\Users\coola\Desktop\HIT339_Assignment1\SalesBoard\bin\Debug\netcoreapp3.1\Microsoft.Data.Sqlite.dll
 C:\Users\coola\Desktop\HIT339_Assignment1\SalesBoard\bin\Debug\netcoreapp3.1\Microsoft.DotNet.PlatformAbstractions.dll
 C:\Users\coola\Desktop\HIT339_Assignment1\SalesBoard\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Sqlite.dll
